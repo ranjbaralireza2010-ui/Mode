@@ -1,381 +1,116 @@
 
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STYLE STORE | پوشاک مردانه</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    <title>STYLE STORE | فروشگاه پوشاک مردانه</title>
 
-body {
-  font-family: Tahoma, sans-serif;
-  background: #f5f5f5;
-  color: #171717;
-}
-
-header {
-  background: #111;
-  color: white;
-  padding: 22px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.logo {
-  font-size: 25px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-.logo span {
-  color: #d6a94d;
-}
-
-.cart {
-  background: #d6a94d;
-  color: #111;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.hero {
-  background: linear-gradient(90deg,#111,#333);
-  color: white;
-  text-align: center;
-  padding: 75px 15px;
-}
-
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 15px;
-}
-
-.hero p {
-  color: #ddd;
-  margin-bottom: 25px;
-}
-
-.hero a {
-  background: #d6a94d;
-  color: #111;
-  text-decoration: none;
-  padding: 13px 28px;
-  border-radius: 7px;
-  font-weight: bold;
-}
-
-.container {
-  padding: 40px 7%;
-}
-
-h2 {
-  margin-bottom: 25px;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-}
-
-.controls input,
-.controls select {
-  padding: 13px;
-  border: 1px solid #ddd;
-  border-radius: 7px;
-  font-size: 14px;
-}
-
-.controls input {
-  flex: 1;
-  min-width: 180px;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
-  gap: 22px;
-}
-
-.product {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 15px #00000010;
-  transition: .3s;
-}
-
-.product:hover {
-  transform: translateY(-5px);
-}
-
-.product img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-}
-
-.info {
-  padding: 16px;
-}
-
-.info h3 {
-  margin-bottom: 12px;
-}
-
-.price {
-  color: #a67c28;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.add {
-  background: #111;
-  color: white;
-  width: 100%;
-  border: none;
-  padding: 12px;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.add:hover {
-  background: #d6a94d;
-  color: #111;
-}
-
-#cartBox {
-  display: none;
-  background: white;
-  padding: 25px;
-  margin-top: 25px;
-  border-radius: 12px;
-}
-
-.cart-item {
-  padding: 12px 0;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.remove {
-  color: red;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-footer {
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 30px;
-  margin-top: 50px;
-}
-
-@media(max-width:600px) {
-  .hero h1 {font-size: 27px;}
-  header {justify-content: center;}
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="logo">STYLE <span>STORE</span></div>
-  <button class="cart" onclick="toggleCart()">
-    🛒 سبد خرید (<span id="count">0</span>)
-  </button>
-</header>
+    <!-- HEADER -->
+    <header>
 
-<section class="hero">
-  <h1>استایل خاص، انتخاب خاص</h1>
-  <p>جدیدترین پوشاک مردانه با طراحی مدرن</p>
-  <a href="#shop">مشاهده محصولات</a>
-</section>
-
-<main class="container" id="shop">
-  <h2>محصولات فروشگاه</h2>
-
-  <div class="controls">
-    <input id="search" placeholder="جستجوی لباس..." oninput="render()">
-
-    <select id="category" onchange="render()">
-      <option value="all">همه محصولات</option>
-      <option value="tshirt">تی‌شرت</option>
-      <option value="pants">شلوار</option>
-      <option value="hoodie">هودی</option>
-      <option value="shoes">کفش</option>
-    </select>
-  </div>
-
-  <div class="products" id="products"></div>
-
-  <div id="cartBox">
-    <h2>سبد خرید شما</h2>
-    <div id="cartItems"></div>
-    <h3 id="total" style="margin-top:20px"></h3>
-    <button class="add" onclick="checkout()" style="margin-top:15px">
-      ثبت سفارش
-    </button>
-  </div>
-</main>
-
-<footer>
-  <h3>STYLE STORE</h3>
-  <p style="margin-top:10px">فروشگاه آنلاین پوشاک مردانه</p>
-  <p style="margin-top:10px">© 2026 All Rights Reserved</p>
-</footer>
-
-<script>
-const products = [
-  {
-    id:1,
-    name:"تی‌شرت مشکی مردانه",
-    price:450000,
-    category:"tshirt",
-    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600"
-  },
-  {
-    id:2,
-    name:"هودی اسپرت مردانه",
-    price:890000,
-    category:"hoodie",
-    image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600"
-  },
-  {
-    id:3,
-    name:"شلوار جین مردانه",
-    price:750000,
-    category:"pants",
-    image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=600"
-  },
-  {
-    id:4,
-    name:"کفش اسپرت مردانه",
-    price:1200000,
-    category:"shoes",
-    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"
-  },
-  {
-    id:5,
-    name:"تی‌شرت سفید",
-    price:420000,
-    category:"tshirt",
-    image:"https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600"
-  },
-  {
-    id:6,
-    name:"هودی طوسی",
-    price:920000,
-    category:"hoodie",
-    image:"https://images.unsplash.com/photo-1578681994506-b8f463449011?w=600"
-  }
-];
-
-let cart = [];
-
-function money(price) {
-  return price.toLocaleString("fa-IR") + " تومان";
-}
-
-function render() {
-  const search = document.getElementById("search").value.toLowerCase();
-  const category = document.getElementById("category").value;
-
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(search) &&
-    (category === "all" || p.category === category)
-  );
-
-  document.getElementById("products").innerHTML =
-    filtered.map(p => `
-      <div class="product">
-        <img src="${p.image}" alt="${p.name}">
-        <div class="info">
-          <h3>${p.name}</h3>
-          <div class="price">${money(p.price)}</div>
-          <button class="add" onclick="addToCart(${p.id})">
-            افزودن به سبد خرید
-          </button>
+        <div class="logo">
+            STYLE <span>STORE</span>
         </div>
-      </div>
-    `).join("") || "<p>محصولی پیدا نشد.</p>";
-}
 
-function addToCart(id) {
-  const item = cart.find(p => p.id === id);
+        <button class="cart" onclick="toggleCart()">
+            🛒 سبد خرید
+            (<span id="count">0</span>)
+        </button>
 
-  if(item) {
-    item.quantity++;
-  } else {
-    cart.push({...products.find(p => p.id === id), quantity:1});
-  }
+    </header>
 
-  updateCart();
-}
 
-function updateCart() {
-  document.getElementById("count").textContent =
-    cart.reduce((sum,p) => sum + p.quantity,0);
+    <!-- HERO -->
+    <section class="hero">
 
-  document.getElementById("cartItems").innerHTML =
-    cart.map(p => `
-      <div class="cart-item">
-        <span>${p.name} × ${p.quantity}</span>
-        <span>
-          ${money(p.price * p.quantity)}
-          <button class="remove" onclick="removeItem(${p.id})">حذف</button>
-        </span>
-      </div>
-    `).join("") || "<p>سبد خرید خالی است.</p>";
+        <h1>استایل خاص، انتخاب خاص</h1>
 
-  const total = cart.reduce((sum,p) =>
-    sum + p.price * p.quantity,0);
+        <p>
+            جدیدترین پوشاک مردانه با طراحی مدرن
+        </p>
 
-  document.getElementById("total").textContent =
-    "مبلغ کل: " + money(total);
-}
+        <a href="#shop">
+            مشاهده محصولات
+        </a>
 
-function removeItem(id) {
-  cart = cart.filter(p => p.id !== id);
-  updateCart();
-}
+    </section>
 
-function toggleCart() {
-  const box = document.getElementById("cartBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-  updateCart();
-}
 
-function checkout() {
-  if(cart.length === 0) {
-    alert("سبد خرید شما خالی است!");
-    return;
-  }
+    <!-- PRODUCTS -->
+    <main class="container" id="shop">
 
-  alert("برای فعال شدن ثبت سفارش واقعی، باید درگاه پرداخت یا سیستم ثبت سفارش متصل شود.");
-}
+        <h2>محصولات مردانه</h2>
 
-render();
-updateCart();
-</script>
+        <div class="controls">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="جستجوی لباس..."
+                oninput="render()"
+            >
+
+            <select id="category" onchange="render()">
+
+                <option value="all">همه محصولات</option>
+
+                <option value="tshirt">تی‌شرت</option>
+
+                <option value="pants">شلوار</option>
+
+                <option value="hoodie">هودی</option>
+
+                <option value="shoes">کفش</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="products" id="products"></div>
+
+
+        <!-- CART -->
+        <div id="cartBox">
+
+            <h2>سبد خرید شما</h2>
+
+            <div id="cartItems"></div>
+
+            <h3 id="total"></h3>
+
+            <button class="add" onclick="checkout()">
+                ثبت سفارش
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h3>STYLE STORE</h3>
+
+        <p>فروشگاه آنلاین پوشاک مردانه</p>
+
+        <p>© 2026 All Rights Reserved</p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
 
 </body>
+
 </html>
